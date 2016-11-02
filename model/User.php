@@ -27,7 +27,8 @@ class User extends MySQLDbObject{
     }
 
     /**
-     * @param $uid
+     * @param $field
+     * @param $val
      *
      * @return \lib\model\ObjectCollection
      */

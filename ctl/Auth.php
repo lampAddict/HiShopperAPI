@@ -91,15 +91,25 @@ class Auth {
         }
 
         $usr = new User();
-        $u = $usr->getUserByFieldVal('phone', $this->request->user)->toArray();
+        $u = $usr->getUserByFieldVal('id', $this->request->user)->toArray();
 
         if( !empty($u) ){
             $u = $u[0];
+            $authCode = new AuthCodes();
+            $cc = $authCode->checkUserCode($u['id'], intval($this->request->code))->toArray();
+            if( empty($cc) ){
+                $this->response->result = null;
+                $this->response->errors[] = 'wrong_code';
 
+                return $this->response;
+            }
+            else{
+                
+            }
         }
         else{
             $this->response->result = null;
-            $this->response->errors[] = 'user_not_founded_by_user_id';
+            $this->response->errors[] = 'user_not_found_by_user_id';
 
             return $this->response;
         }

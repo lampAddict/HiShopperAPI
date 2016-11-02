@@ -30,9 +30,25 @@ class AuthCodes extends MySQLDbObject{
     public function getCode(){
         return $this->code;
     }
-    
+
+    /**
+     * @param $uid  integer user id
+     *
+     * @return \lib\model\ObjectCollection
+     */
     public function saveCode($uid){
         $this->sql = "INSERT INTO ".$this->table." (`uid`, `code`, `created_at`) VALUES ($uid, ".$this->code.", ".time().");";
+        return $this->query();
+    }
+
+    /**
+     * @param $uid  integer user id
+     * @param $code integer code value
+     *
+     * @return \lib\model\ObjectCollection
+     */
+    public function checkUserCode($uid, $code=0) {
+        $this->sql = "SELECT created_at FROM `".$this->table."` WHERE `uid` = $uid AND `code` = $code LIMIT 1;";
         return $this->query();
     }
 }

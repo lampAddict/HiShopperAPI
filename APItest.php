@@ -19,7 +19,7 @@
             padding: 5px;
         }
         .w50{
-            width: 48%;
+            width: 50%;
         }
     </style>
 </head>
@@ -51,21 +51,28 @@
             ,['caption'=>'Авторизация по телефону, не задан телефон', 'url'=>'auth/phone', 'params'=>'{}']
             ,['caption'=>'Авторизация по телефону, ошибка в формате', 'url'=>'auth/phone', 'params'=>'{"phone":"9170010203"}']
             ,['caption'=>'Авторизация по телефону', 'url'=>'auth/phone', 'params'=>'{"phone":"79170010203"}']
-            ,['caption'=>'Ввод кода из sms, неправильный код', 'url'=>'auth/verify', 'params'=>'{"phone":"79170010203","code":"0001","user":0,"device":{"uuid":"0a89df6v7df6sv7r6s07f","pt":"df79b6sd8fbg6","x":320,"y":480}}']
+            ,['caption'=>'Ввод кода из sms, неправильный код', 'url'=>'auth/verify', 'params'=>'{"phone":"79170010203","code":"0001","user":2,"device":{"uuid":"0a89df6v7df6sv7r6s07f","pt":"df79b6sd8fbg6","x":320,"y":480}}']
+            ,['caption'=>'Ввод кода из sms, неправильный id пользователя', 'url'=>'auth/verify', 'params'=>'{"phone":"79170010203","code":"0001","user":0,"device":{"uuid":"0a89df6v7df6sv7r6s07f","pt":"df79b6sd8fbg6","x":320,"y":480}}']
         ];
 
     $c = 0;
     foreach ($req as $rq){
         echo '  <div class="block border">
-                    <div class="block pad w50">
-                        <table>
+                    <div class="block pad">
+                        <table class="w50">
                             <tr>
-                                <td>'.$rq['caption'].'</td>
-                                <td>
-                                    <input id="data'.$c.'" type="text" value=\''.$rq['params'].'\'/>
-                                </td>
-                                <td>
-                                    <input type="button" value="Отправить запрос" onclick="sendRequest(\'/hiShopperAPI/'.$rq['url'].'\', '.$c.')"/>
+                                <td align="left" class="w50">'.$rq['caption'].'</td>
+                                <td align="right" class="w50">
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                <input id="data'.$c.'" type="text" value=\''.$rq['params'].'\'/>
+                                            </td>
+                                            <td>
+                                                <input type="button" value="Отправить запрос" onclick="sendRequest(\'/hiShopperAPI/'.$rq['url'].'\', '.$c.')"/>
+                                            </td>
+                                        </tr>
+                                    </table>
                                 </td>
                             </tr>
                         </table>
@@ -75,7 +82,6 @@
                 </div>';
         $c++;
     }
-
     ?>
 </body>
 </html>
