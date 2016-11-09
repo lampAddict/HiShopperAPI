@@ -2,12 +2,11 @@
 
 namespace ctl;
 
-use core\Dispatcher;
 use core\JsonRequest;
-use core\JsonResponse;
 
 use model\User;
 use model\AuthCodes;
+use model\UserTokens;
 
 use lib\StringUtils;
 
@@ -15,25 +14,13 @@ use lib\StringUtils;
  * Class Auth
  * @package ctl
  */
-class Auth {
-    
-    /**
-     * @var JsonRequest
-     */
-    public $request;
-
-    /**
-     * @var JsonResponse
-     */
-    public $response;
+class Auth extends Ctl{
 
     /**
      * @param JsonRequest $request
      */
     function __construct(JsonRequest $request) {
-        
-        $this->request = $request;
-        $this->response = $this->request->response();
+        parent::__construct($request);
     }
     
     public function phone(){
@@ -104,7 +91,11 @@ class Auth {
                 return $this->response;
             }
             else{
-                $this->response->result = ['pt'=>md5((intval($this->request->code)*intval($this->request->code)).$this->request->code)];
+                $pt = md5((intval($this->request->code)*intval($this->request->code)).$this->request->code);
+                $this->response->result = ['pt'=>$pt];
+
+                $ut = new UserTokens();
+                $res = $ut->saveToken($u['id'], $pt);
 
                 return $this->response;
             }
@@ -118,6 +109,34 @@ class Auth {
     }
 
     public function setpt(){
+        if( !isset($this->request->pt) ){
+            $this->response->result = null;
+            $this->response->errors[] = 'empty_push_token';
 
+            return $this->response;
+        }
+
+        $headers = getallheaders();
+        if( isset($headers['x-auth']) ){
+
+            $ut = new UserTokens();
+            $uid = $ut->getUserByToken(addslashes($headers['x-auth']))->toArray();
+            if( !empty($uid) ){
+                $uid = $uid[0]['uid'];
+                $ac = new AuthCodes();
+                if( $ac->checkCode($uid, $headers['x-auth']) ){
+                    $ut->updateToken($uid, $this->request->pt);
+                    $this->response->result = 'ok';
+
+                    return $this->response;
+                }
+            }
+        }
+        else{
+            $this->response->result = null;
+            $this->response->errors[] = 'not_authorized';
+
+            return $this->response;
+        }
     }
 }

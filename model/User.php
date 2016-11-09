@@ -22,8 +22,6 @@ class User extends MySQLDbObject{
         $this->setField('phone', new IntegerField('phone'));
 
         $this->setField('blocked', new IntegerField('blocked'));
-        
-        //$this->createTable();
     }
 
     /**
@@ -34,14 +32,6 @@ class User extends MySQLDbObject{
      */
     public function getUserByFieldVal($field, $val) {
         $this->sql = "SELECT * FROM `".$this->table."` WHERE `$field` = $val LIMIT 1;";
-        return $this->query();
-    }
-
-    /**
-     * @return \lib\model\ObjectCollection
-     */
-    public function getAll(){
-        $this->sql = 'SELECT * FROM ' . $this->table . ';';
         return $this->query();
     }
 }
