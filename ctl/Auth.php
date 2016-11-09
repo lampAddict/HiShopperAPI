@@ -75,7 +75,7 @@ class Auth {
         $authCode->generateCode();
         $authCode->saveCode($u['id']);
 
-        $this->response->result = ['user'=>$u['id'], 'sms'=>$authCode->getCode()];
+        $this->response->result = ['user'=>$u['id'], 'sms'=>$authCode->getGeneratedCode()];
 
         //echo var_export( $usr, true); die;
         return $this->response;
@@ -96,7 +96,7 @@ class Auth {
         if( !empty($u) ){
             $u = $u[0];
             $authCode = new AuthCodes();
-            $cc = $authCode->checkUserCode($u['id'], intval($this->request->code))->toArray();
+            $cc = $authCode->getCode($u['id'], intval($this->request->code))->toArray();
             if( empty($cc) ){
                 $this->response->result = null;
                 $this->response->errors[] = 'wrong_code';
@@ -104,7 +104,9 @@ class Auth {
                 return $this->response;
             }
             else{
-                
+                $this->response->result = ['pt'=>md5((intval($this->request->code)*intval($this->request->code)).$this->request->code)];
+
+                return $this->response;
             }
         }
         else{
@@ -113,5 +115,9 @@ class Auth {
 
             return $this->response;
         }
+    }
+
+    public function setpt(){
+
     }
 }

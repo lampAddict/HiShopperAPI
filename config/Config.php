@@ -24,6 +24,9 @@ class Config {
             new JsonRequestHandler([
                  'auth_phone' => '\ctl\Auth::phone'
                 ,'auth_verify' => '\ctl\Auth::verify'
+
+                ,'auth_setpt' => '\ctl\Auth::setpt'
+                ,'user_profile' => '\ctl\User::profile'
             ])
         );
 
