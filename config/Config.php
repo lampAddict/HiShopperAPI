@@ -22,11 +22,12 @@ class Config {
     function __construct() {
         $this->handlers = array(
             new JsonRequestHandler([
-                 'auth_phone' => '\ctl\Auth::phone'
-                ,'auth_verify' => '\ctl\Auth::verify'
+                 'auth_phone' => '\ctl\AuthCtl::phone'
+                ,'auth_verify' => '\ctl\AuthCtl::verify'
 
-                ,'auth_setpt' => '\ctl\Auth::setpt'
-                ,'user_profile' => '\ctl\User::profile'
+                ,'auth_setpt' => '\ctl\AuthCtl::setpt'
+                ,'user_profile' => '\ctl\UserCtl::profile'
+                ,'user_public' => '\ctl\UserCtl::publicProfile'
             ])
         );
 

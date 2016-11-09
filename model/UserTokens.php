@@ -33,15 +33,32 @@ class UserTokens extends MySQLDbObject{
     }
 
     /**
-     * Save user token to DB
+     * Get user token by its id
+     * @param $uid integer user id
+     *
+     * @return \lib\model\ObjectCollection
+     */
+    public function getUserToken($uid){
+        $this->sql = "SELECT `token` FROM `".$this->table."` WHERE `uid` = '$uid' LIMIT 1;";
+        return $this->query();
+    }
+
+    /**
+     * Save unique user token to DB update otherwise
      * @param $uid integer user id
      * @param $pt string push-token
      * 
      * @return \lib\model\ObjectCollection
      */
     public function saveToken($uid, $pt){
-        $this->sql = "INSERT INTO ".$this->table." (`id`, `uid`, `token`) VALUES (DEFAULT, $uid, '$pt');";
-        return $this->query();
+
+        if( !empty($this->getUserToken($uid)) ){
+            $this->updateToken($uid, $pt);
+        }
+        else{
+            $this->sql = "INSERT INTO ".$this->table." (`id`, `uid`, `token`) VALUES (DEFAULT, $uid, '$pt');";
+            return $this->query();
+        }
     }
 
     /**

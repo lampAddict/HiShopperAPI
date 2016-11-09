@@ -70,9 +70,11 @@
             ,['caption'=>'Авторизация по телефону', 'url'=>'auth/phone', 'params'=>'{"phone":"79170010203"}']
             ,['caption'=>'Ввод кода из sms, неправильный код', 'url'=>'auth/verify', 'params'=>'{"phone":"79170010203","code":"0001","user":2,"device":{"uuid":"0a89df6v7df6sv7r6s07f","pt":"df79b6sd8fbg6","x":320,"y":480}}']
             ,['caption'=>'Ввод кода из sms, неправильный id пользователя', 'url'=>'auth/verify', 'params'=>'{"phone":"79170010203","code":"0001","user":0,"device":{"uuid":"0a89df6v7df6sv7r6s07f","pt":"df79b6sd8fbg6","x":320,"y":480}}']
-            ,['caption'=>'Ввод кода из sms', 'url'=>'auth/verify', 'params'=>'{"phone":"79170010203","code":"5060","user":2,"device":{"uuid":"0a89df6v7df6sv7r6s07f","pt":"df79b6sd8fbg6","x":320,"y":480}}']
-
+            ,['caption'=>'Ввод кода из sms', 'url'=>'auth/verify', 'params'=>'{"phone":"79170010203","code":"4964","user":2,"device":{"uuid":"0a89df6v7df6sv7r6s07f","pt":"df79b6sd8fbg6","x":320,"y":480}}']
             ,['caption'=>'Добавление пуш токена', 'url'=>'auth/setpt', 'params'=>'{"pt":"df79b6sd8fbg6"}']
+
+            ,['caption'=>'Профиль пользователя', 'url'=>'user/profile', 'params'=>'{}']
+            ,['caption'=>'Публичный профиль пользователя', 'url'=>'user/public/1', 'params'=>'{}']
         ];
 
     $c = 0;

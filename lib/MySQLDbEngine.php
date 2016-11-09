@@ -43,6 +43,8 @@ private function connect() {
 		$this->show_error_msg("Could not connect to server: <b>$this->server</b>.");
 	}
 
+	mysqli_set_charset($this->link_id, "utf8");
+
 	if( !mysqli_select_db($this->link_id, $this->_database) ) {
 		$this->show_error_msg("Could not open database: <b>$this->database</b>.");
 	}

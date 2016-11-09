@@ -1,9 +1,14 @@
 RewriteEngine on
 
-RewriteBase /hiShopperAPI
+#RewriteBase /hiShopperAPI
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 
-RewriteRule ^([^/]+)$ /hiShopperAPI/index.php?requestName=$1
-RewriteRule ^([^/]+)/([^/]+)$ /hiShopperAPI/index.php?requestName=$1&m=$2
+RewriteRule ^auth\/phone$ /hiShopperAPI/index.php?requestName=auth&m=phone
+RewriteRule ^auth\/verify$ /hiShopperAPI/index.php?requestName=auth&m=verify
+RewriteRule ^auth\/setpt$ /hiShopperAPI/index.php?requestName=auth&m=setpt
+RewriteRule ^user\/profile$ /hiShopperAPI/index.php?requestName=user&m=profile
+RewriteRule ^user\/public\/([^/]+)$ /hiShopperAPI/index.php?requestName=user&m=public&id=$1
+
+#RewriteRule ^([^/]+)$ /hiShopperAPI/index.php?requestName=$1

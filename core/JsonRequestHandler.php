@@ -52,7 +52,7 @@ class JsonRequestHandler implements IRequestHandler {
 
                 $ctl = new $_class($request);
                 $response = $ctl->$_method();
-
+                
                 echo $response;
 
                 return true;

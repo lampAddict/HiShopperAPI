@@ -11,10 +11,12 @@ use model\UserTokens;
 use lib\StringUtils;
 
 /**
- * Class Auth
+ * Class AuthCtl
  * @package ctl
  */
-class Auth extends Ctl{
+class AuthCtl extends Ctl{
+
+    use \_traits\Auth;
 
     /**
      * @param JsonRequest $request
@@ -40,7 +42,7 @@ class Auth extends Ctl{
         }
 
         $usr = new User();
-        $u = $usr->getUserByFieldVal('phone', $this->request->phone)->toArray();
+        $u = $usr->getUserByFieldVal('phone', addslashes($this->request->phone))->toArray();
 
         if( !empty($u) ){
             $u = $u[0];
@@ -78,7 +80,7 @@ class Auth extends Ctl{
         }
 
         $usr = new User();
-        $u = $usr->getUserByFieldVal('id', $this->request->user)->toArray();
+        $u = $usr->getUserByFieldVal('id', addslashes($this->request->user))->toArray();
 
         if( !empty($u) ){
             $u = $u[0];
@@ -115,22 +117,13 @@ class Auth extends Ctl{
 
             return $this->response;
         }
-
-        $headers = getallheaders();
-        if( isset($headers['x-auth']) ){
-
+        
+        if( $this->checkUserToken() ){
             $ut = new UserTokens();
-            $uid = $ut->getUserByToken(addslashes($headers['x-auth']))->toArray();
-            if( !empty($uid) ){
-                $uid = $uid[0]['uid'];
-                $ac = new AuthCodes();
-                if( $ac->checkCode($uid, $headers['x-auth']) ){
-                    $ut->updateToken($uid, $this->request->pt);
-                    $this->response->result = 'ok';
+            $ut->updateToken($this->userId, $this->request->pt);
+            $this->response->result = 'ok';
 
-                    return $this->response;
-                }
-            }
+            return $this->response;
         }
         else{
             $this->response->result = null;
