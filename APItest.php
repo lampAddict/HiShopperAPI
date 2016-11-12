@@ -25,7 +25,7 @@
 </head>
 <body>
     <script type="application/javascript">
-        function sendRequest(req, indx){
+        function sendRequest(method, req, indx){
 
             var  _data   = $('#data'+indx).val()
                 ,headers = {}
@@ -38,7 +38,7 @@
 
             $.ajax({
                 url: req,
-                method: 'POST',
+                method: method,
                 headers: headers,
                 dataType: 'json',
                 contentType: 'application/json; charset=utf-8',
@@ -63,18 +63,21 @@
 
     <?php
         $req = [
-             ['caption'=>'Ошибка в URL', 'url'=>'oeritoer', 'params'=>'']
+             ['caption'=>'Ошибка в URL', 'url'=>'oeritoer', 'params'=>'', 'method'=>'GET']
             ,['caption'=>'Авторизация по телефону, пользователь заблокирован', 'url'=>'auth/phone', 'params'=>'{"phone":"79171111111"}']
             ,['caption'=>'Авторизация по телефону, не задан телефон', 'url'=>'auth/phone', 'params'=>'{}']
             ,['caption'=>'Авторизация по телефону, ошибка в формате', 'url'=>'auth/phone', 'params'=>'{"phone":"9170010203"}']
             ,['caption'=>'Авторизация по телефону', 'url'=>'auth/phone', 'params'=>'{"phone":"79170010203"}']
             ,['caption'=>'Ввод кода из sms, неправильный код', 'url'=>'auth/verify', 'params'=>'{"phone":"79170010203","code":"0001","user":2,"device":{"uuid":"0a89df6v7df6sv7r6s07f","pt":"df79b6sd8fbg6","x":320,"y":480}}']
             ,['caption'=>'Ввод кода из sms, неправильный id пользователя', 'url'=>'auth/verify', 'params'=>'{"phone":"79170010203","code":"0001","user":0,"device":{"uuid":"0a89df6v7df6sv7r6s07f","pt":"df79b6sd8fbg6","x":320,"y":480}}']
-            ,['caption'=>'Ввод кода из sms', 'url'=>'auth/verify', 'params'=>'{"phone":"79170010203","code":"4964","user":2,"device":{"uuid":"0a89df6v7df6sv7r6s07f","pt":"df79b6sd8fbg6","x":320,"y":480}}']
+            ,['caption'=>'Ввод кода из sms', 'url'=>'auth/verify', 'params'=>'{"phone":"79170010203","code":"2058","user":2,"device":{"uuid":"0a89df6v7df6sv7r6s07f","pt":"df79b6sd8fbg6","x":320,"y":480}}']
             ,['caption'=>'Добавление пуш токена', 'url'=>'auth/setpt', 'params'=>'{"pt":"df79b6sd8fbg6"}']
 
-            ,['caption'=>'Профиль пользователя', 'url'=>'user/profile', 'params'=>'{}']
-            ,['caption'=>'Публичный профиль пользователя', 'url'=>'user/public/1', 'params'=>'{}']
+            ,['caption'=>'Профиль пользователя', 'url'=>'user/profile', 'params'=>'', 'method'=>'GET']
+            ,['caption'=>'Публичный профиль пользователя', 'url'=>'user/public/1', 'params'=>'', 'method'=>'GET']
+            ,['caption'=>'Сделки в публичном профиле', 'url'=>'user/public/1/deals', 'params'=>'max=3&count=2', 'method'=>'GET']
+            ,['caption'=>'Объявления в публичном профиле', 'url'=>'user/public/1/ads', 'params'=>'max=3&count=2', 'method'=>'GET']
+            ,['caption'=>'Проверка никнейма', 'url'=>'user/nickname', 'params'=>'{"nickname":"test"}']
         ];
 
     $c = 0;
@@ -91,7 +94,7 @@
                                                 <input id="data'.$c.'" type="text" value=\''.$rq['params'].'\'/>
                                             </td>
                                             <td>
-                                                <input type="button" value="Отправить запрос" onclick="sendRequest(\'/hiShopperAPI/'.$rq['url'].'\', '.$c.')"/>
+                                                <input type="button" value="Отправить запрос" onclick="sendRequest('.(isset($rq['method']) ? '\''.$rq['method'] .'\'' : '\'POST\'').', \'/hiShopperAPI/'.$rq['url'].'\', '.$c.')"/>
                                             </td>
                                         </tr>
                                     </table>

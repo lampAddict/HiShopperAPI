@@ -39,7 +39,7 @@ class User extends MySQLDbObject{
      * @return \lib\model\ObjectCollection
      */
     public function getUserByFieldVal($field, $val) {
-        $this->sql = "SELECT * FROM `".$this->table."` WHERE `$field` = $val LIMIT 1;";
+        $this->sql = "SELECT * FROM `".$this->table."` WHERE `$field` = '$val' LIMIT 1;";
         return $this->query();
     }
 }

@@ -24,7 +24,9 @@ class JsonRequestHandler implements IRequestHandler {
             $json = file_get_contents('php://input');
         }
 
-        if( !$json )return;
+        if(    !$json
+            && empty($_GET)
+        )return;
 
         $requestName = '';
         if(    isset($_GET['requestName'])

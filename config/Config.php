@@ -28,6 +28,9 @@ class Config {
                 ,'auth_setpt' => '\ctl\AuthCtl::setpt'
                 ,'user_profile' => '\ctl\UserCtl::profile'
                 ,'user_public' => '\ctl\UserCtl::publicProfile'
+                ,'user_publicDeals' => '\ctl\UserCtl::publicProfileDeals'
+                ,'user_publicAds' => '\ctl\UserCtl::publicProfileAds'
+                ,'user_nickname' => '\ctl\UserCtl::checkNickname'
             ])
         );
 
