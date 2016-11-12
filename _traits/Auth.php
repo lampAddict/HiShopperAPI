@@ -10,7 +10,7 @@ trait Auth{
     public $userId = null;
     
     /**
-     * Checks if user has authorized
+     * Checks if user authorized
      * 
      * @return integer|bool user identification number on successful check false otherwise
      */

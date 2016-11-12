@@ -23,7 +23,11 @@ class User extends MySQLDbObject{
         $this->setField('phone', new StringField('phone'));
         $this->setField('email', new StringField('email'));
         $this->setField('gender', new StringField('gender'));
+        $this->setField('cindex', new StringField('cindex'));
         $this->setField('city', new StringField('city'));
+        $this->setField('street', new StringField('street'));
+        $this->setField('house', new StringField('house'));
+        $this->setField('flat', new IntegerField('flat'));
 
         $this->setField('blocked', new IntegerField('blocked'));
     }
