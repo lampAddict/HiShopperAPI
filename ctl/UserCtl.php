@@ -58,6 +58,9 @@ class UserCtl extends Ctl{
         if( !empty($uPhoto) ){
             $uInfo['photo'] = [$uPhoto[0]['photo']];
         }
+        else{
+            $uInfo['photo'] = [];
+        }
 
         //Брэнды пользователя
         $uBrands = new UserBrands();
@@ -66,6 +69,9 @@ class UserCtl extends Ctl{
             foreach ($uBrand as $bbid){
                 $uInfo['brands'][] = $bbid['bid'];
             }
+        }
+        else{
+            $uInfo['brands'] = [];
         }
 
         //Размеры пользователя
@@ -76,6 +82,9 @@ class UserCtl extends Ctl{
                 $uInfo['sizes'][] = intval($us['size']);
             }
         }
+        else{
+            $uInfo['sizes'] = [];
+        }
 
         //Разделы пользователя
         $uSections = new UserSections();
@@ -84,6 +93,9 @@ class UserCtl extends Ctl{
             foreach ($uSection as $us){
                 $uInfo['sections'][] = $us['sid'];
             }
+        }
+        else{
+            $uInfo['sections'] = [];
         }
 
         //Последователи пользователя
@@ -94,7 +106,15 @@ class UserCtl extends Ctl{
                 $uInfo['follow']['followers'][] = $uf['uidf'];
             }
         }
-        $uInfo['follow']['publishers'] = [mt_rand(1, 50)];
+
+        //Те кого пользователь фолловит
+        $uPublishers = new UserFollowers();
+        $uPublisher = $uPublishers->getUserPublishers($uid)->toArray();
+        if( !empty($uPublisher) ){
+            foreach ($uPublisher as $up){
+                $uInfo['follow']['publishers'][] = $up['uid'];
+            }
+        }
 
         //Соберем адрес в отдельное поле
         $fields = ['index'=>'cindex', 'street'=>'street', 'house'=>'house', 'flat'=>'flat'];
@@ -227,6 +247,7 @@ class UserCtl extends Ctl{
         }
 
         $u = new User();
+        //update profile routine, request contains picture
         $updateUserProfileResult = false;
         if( isset($_POST['data']) ){
             $data = json_decode($_POST['data'], true);
@@ -240,9 +261,21 @@ class UserCtl extends Ctl{
                 return $this->response;
             }
 
+            //delete user profile picture
+            if(    isset($data['photo'])
+                && $data['photo'] == 'delete'
+            ){
+                $u->deleteUserPhoto($this->userId);
+                unset($data['photo']);
+
+                $this->response->result = $this->getUserProfileData($this->userId);
+                return $this->response;
+            }
+
             $updateUserProfileResult = $u->updateUserProfile($this->userId, $data);
         }
 
+        //update profile routine, common request without picture
         if( $updateUserProfileResult === false ){
             $props = get_object_vars($this->request);
             if( count($props) > 2 ){
@@ -255,6 +288,17 @@ class UserCtl extends Ctl{
                     $this->response->result = null;
                     $this->response->errors[] = 'nickname_already_exists';
 
+                    return $this->response;
+                }
+
+                //delete user profile picture
+                if(    isset($props['photo'])
+                    && $props['photo'] == 'delete'
+                ){
+                    $u->deleteUserPhoto($this->userId);
+                    unset($props['photo']);
+
+                    $this->response->result = $this->getUserProfileData($this->userId);
                     return $this->response;
                 }
 

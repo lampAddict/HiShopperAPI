@@ -102,8 +102,9 @@
             ,['caption'=>'Сделки в публичном профиле', 'url'=>'user/public/1/deals', 'params'=>'max=3&count=2', 'method'=>'GET']
             ,['caption'=>'Объявления в публичном профиле', 'url'=>'user/public/1/ads', 'params'=>'max=3&count=2', 'method'=>'GET']
             ,['caption'=>'Проверка никнейма', 'url'=>'user/nickname', 'params'=>'{"nickname":"test"}']
-            ,['caption'=>'Редактирование профиля', 'url'=>'user/update', 'params'=>'{"name":"Вася Пупкин", "city":"Москва", "nickname":"Pinkpanter","email":"pinkpanter@mail.ru"}']
-            ,['caption'=>'Редактирование профиля', 'url'=>'user/update', 'params'=>'{"nickname":"test"}']
+            ,['caption'=>'Редактирование профиля + файл', 'url'=>'user/update', 'params'=>'{"name":"Вася Пупкин", "city":"Москва", "nickname":"Pinkpanter","email":"pinkpanter@mail.ru"}']
+            ,['caption'=>'Редактирование профиля, никнейм занят', 'url'=>'user/update', 'params'=>'{"nickname":"test"}']
+            ,['caption'=>'Редактирование профиля, удаление фото', 'url'=>'user/update', 'params'=>'{"photo":"delete"}']
         ];
 
     $c = 0;

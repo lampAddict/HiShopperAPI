@@ -51,7 +51,7 @@ class User extends MySQLDbObject{
      * @return \lib\model\ObjectCollection
      */
     public function getUserPhoto($uid){
-        $this->sql = "SELECT * FROM `user_photos` WHERE `uid` = '$uid' LIMIT 1;";
+        $this->sql = "SELECT `photo` FROM `user_photos` WHERE `uid` = '$uid' LIMIT 1;";
         return $this->query();
     }
 
@@ -82,6 +82,22 @@ class User extends MySQLDbObject{
             $this->sql = "INSERT INTO `user_photos` VALUES (DEFAULT, '$uid', '$photo', DEFAULT, DEFAULT);";
             return $this->query();
         }
+    }
+
+    /**
+     * Delete user profile picture
+     * @param $uid integer user identification number
+     *
+     * @return \lib\model\ObjectCollection
+     */
+    public function deleteUserPhoto($uid){
+        $uPhoto = $this->getUserPhoto($uid)->toArray();
+        if( !empty($uPhoto) ){
+            unlink(__DIR__.'/../static/img/profile/'.$uPhoto['photo']);
+        }
+
+        $this->sql = "DELETE FROM `user_photos` WHERE `uid` = '$uid' LIMIT 1;";
+        return $this->query();
     }
 
     /**

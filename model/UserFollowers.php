@@ -34,6 +34,17 @@ class UserFollowers extends MySQLDbObject{
     }
 
     /**
+     * Get list of publishers
+     * @param $uid user identification number
+     *
+     * @return \lib\model\ObjectCollection
+     */
+    public function getUserPublishers($uid) {
+        $this->sql = "SELECT `uid` FROM `".$this->table."` WHERE `uidf` = $uid;";
+        return $this->query();
+    }
+    
+    /**
      * Check if one user is following another
      * @param $uid user identification number
      * @param $uidf user follower identification number
