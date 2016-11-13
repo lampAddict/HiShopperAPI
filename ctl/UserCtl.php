@@ -42,19 +42,26 @@ class UserCtl extends Ctl{
             return $this->response;
         }
 
+        $this->response->result = $this->getUserProfileData($this->userId);
+
+        return $this->response;
+    }
+
+    protected function getUserProfileData($uid){
+
         $u = new User();
-        $uInfo = $u->getUserByFieldVal('id', $this->userId)->toArray()[0];
+        $uInfo = $u->getUserByFieldVal('id', $uid)->toArray()[0];
 
         //Фотографии пользователя
         $uPhotos = new UserPhotos();
-        $uPhoto = $uPhotos->getUserPhotos($this->userId)->toArray();
+        $uPhoto = $uPhotos->getUserPhotos($uid)->toArray();
         if( !empty($uPhoto) ){
             $uInfo['photo'] = [$uPhoto[0]['photo']];
         }
 
         //Брэнды пользователя
         $uBrands = new UserBrands();
-        $uBrand = $uBrands->getUserBrands($this->userId)->toArray();
+        $uBrand = $uBrands->getUserBrands($uid)->toArray();
         if( !empty($uBrand) ){
             foreach ($uBrand as $bbid){
                 $uInfo['brands'][] = $bbid['bid'];
@@ -63,7 +70,7 @@ class UserCtl extends Ctl{
 
         //Размеры пользователя
         $uSizes = new UserSizes();
-        $uSize = $uSizes->getUserSizes($this->userId)->toArray();
+        $uSize = $uSizes->getUserSizes($uid)->toArray();
         if( !empty($uSize) ){
             foreach ($uSize as $us){
                 $uInfo['sizes'][] = intval($us['size']);
@@ -72,12 +79,22 @@ class UserCtl extends Ctl{
 
         //Разделы пользователя
         $uSections = new UserSections();
-        $uSection = $uSections->getUserSections($this->userId)->toArray();
+        $uSection = $uSections->getUserSections($uid)->toArray();
         if( !empty($uSection) ){
             foreach ($uSection as $us){
                 $uInfo['sections'][] = $us['sid'];
             }
         }
+
+        //Последователи пользователя
+        $uFollowers = new UserFollowers();
+        $uFollower = $uFollowers->getUserFollowers($uid)->toArray();
+        if( !empty($uFollower) ){
+            foreach ($uFollower as $uf){
+                $uInfo['follow']['followers'][] = $uf['uidf'];
+            }
+        }
+        $uInfo['follow']['publishers'] = [mt_rand(1, 50)];
 
         //Соберем адрес в отдельное поле
         $fields = ['index'=>'cindex', 'street'=>'street', 'house'=>'house', 'flat'=>'flat'];
@@ -88,11 +105,9 @@ class UserCtl extends Ctl{
         }
         $uInfo['address']['fio'] = $uInfo['name'];
 
-        $this->response->result = $uInfo;
-
-        return $this->response;
+        return $uInfo;
     }
-    
+
     public function publicProfile(){
 
         if( !$this->checkUserToken() ) {
@@ -208,7 +223,30 @@ class UserCtl extends Ctl{
         }
 
         $u = new User();
-        $uInfo = $u->getUserByFieldVal('id', $this->userId)->toArray()[0];
+        $updateUserProfileResult = false;
+        if( isset($_POST['data']) ){
+            $data = json_decode($_POST['data'], true);
+            $updateUserProfileResult = $u->updateUserProfile($this->userId, $data);
+        }
+
+        if( $updateUserProfileResult === false ){
+            $props = get_object_vars($this->request);
+            if( count($props) > 2 ){
+                unset($props['data']);
+                unset($props['requestName']);
+
+                $updateUserProfileResult = $u->updateUserProfile($this->userId, $props);
+            }
+        }
+
+        if( $updateUserProfileResult === false ){
+            $this->response->result = null;
+            $this->response->errors[] = 'user_profile_update_failed';
+
+            return $this->response;
+        }
+
+        $uInfo = $this->getUserProfileData($this->userId);
 
         if( !empty($_FILES) ){
             $numFiles = count($_FILES);

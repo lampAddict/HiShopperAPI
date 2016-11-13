@@ -83,4 +83,29 @@ class User extends MySQLDbObject{
             return $this->query();
         }
     }
+
+    /**
+     * Update user profile data
+     * @param $uid integer user identification number
+     * @param $data array (associative) keys - profile field names, values - new values
+     * 
+     * @return bool|\lib\model\ObjectCollection
+     */
+    public function updateUserProfile($uid, $data){
+        $this->sql = "UPDATE `".$this->table."` SET ";
+        $sql = '';
+        foreach ($data as $k=>$v){
+            if( $this->__isset($k) ){
+                $sql .= "`$k` = '$v', ";
+            }
+        }
+        if( $sql != '' ){
+            $sql = rtrim($sql, ', ');
+            $this->sql .= $sql." WHERE `id` = '$uid' LIMIT 1;";
+
+            return $this->query();
+        }
+
+        return false;
+    }
 }
