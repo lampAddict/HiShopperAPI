@@ -202,9 +202,9 @@ class UserCtl extends Ctl{
         }
 
         $u = new User();
-        $used = $u->getUserByFieldVal('nickname', addslashes($this->request->nickname))->toArray();
+        $used = $this->doCheckNickname($u, addslashes($this->request->nickname));
 
-        if( !empty($used)){
+        if( !empty($used) ){
             $this->response->result['used'] = 1;
         }
         else{
@@ -212,6 +212,10 @@ class UserCtl extends Ctl{
         }
 
         return $this->response;
+    }
+
+    protected function doCheckNickname(User $u, $nickname){
+        return $u->getUserByFieldVal('nickname', $nickname)->toArray();
     }
 
     public function updateProfile(){
@@ -226,6 +230,16 @@ class UserCtl extends Ctl{
         $updateUserProfileResult = false;
         if( isset($_POST['data']) ){
             $data = json_decode($_POST['data'], true);
+
+            if(    isset($data['nickname'])
+                && !empty($this->doCheckNickname($u, $data['nickname']))
+            ){
+                $this->response->result = null;
+                $this->response->errors[] = 'nickname_already_exists';
+
+                return $this->response;
+            }
+
             $updateUserProfileResult = $u->updateUserProfile($this->userId, $data);
         }
 
@@ -234,6 +248,15 @@ class UserCtl extends Ctl{
             if( count($props) > 2 ){
                 unset($props['data']);
                 unset($props['requestName']);
+
+                if(    isset($props['nickname'])
+                    && !empty($this->doCheckNickname($u, $props['nickname']))
+                ){
+                    $this->response->result = null;
+                    $this->response->errors[] = 'nickname_already_exists';
+
+                    return $this->response;
+                }
 
                 $updateUserProfileResult = $u->updateUserProfile($this->userId, $props);
             }
