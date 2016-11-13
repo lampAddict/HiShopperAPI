@@ -108,8 +108,7 @@ class UserCtl extends Ctl{
         }
 
         //Те кого пользователь фолловит
-        $uPublishers = new UserFollowers();
-        $uPublisher = $uPublishers->getUserPublishers($uid)->toArray();
+        $uPublisher = $uFollowers->getUserPublishers($uid)->toArray();
         if( !empty($uPublisher) ){
             foreach ($uPublisher as $up){
                 $uInfo['follow']['publishers'][] = $up['uid'];
@@ -252,6 +251,7 @@ class UserCtl extends Ctl{
         if( isset($_POST['data']) ){
             $data = json_decode($_POST['data'], true);
 
+            //check user nickname availability
             if(    isset($data['nickname'])
                 && !empty($this->doCheckNickname($u, $data['nickname']))
             ){
@@ -282,6 +282,7 @@ class UserCtl extends Ctl{
                 unset($props['data']);
                 unset($props['requestName']);
 
+                //check user nickname availability
                 if(    isset($props['nickname'])
                     && !empty($this->doCheckNickname($u, $props['nickname']))
                 ){
@@ -345,6 +346,64 @@ class UserCtl extends Ctl{
         }
 
         $this->response->result = $uInfo;
+
+        return $this->response;
+    }
+
+    public function follow(){
+        if( !$this->checkUserToken() ){
+            $this->response->result = null;
+            $this->response->errors[] = 'not_authorized';
+
+            return $this->response;
+        }
+
+        if( !isset($this->request->publisher) ){
+            $this->response->result = null;
+            $this->response->errors[] = 'wrong_publisher';
+
+            return $this->response;
+        }
+
+        $u = new User();
+        $uProfileData = $u->getUserByFieldVal('id', intval($this->request->publisher))->toArray();
+        if( empty($uProfileData) ){
+            $this->response->result = null;
+            $this->response->errors[] = 'publisher_not_found';
+
+            return $this->response;
+        }
+
+        $uf = new UserFollowers();
+        $up = $uf->getUserPublishers($this->userId)->toArray();
+        if( !empty($up) ){
+            foreach ($up as $p){
+                if( $p['uid'] == intval($this->request->publisher) ){
+                    $this->response->result = null;
+                    $this->response->errors[] = 'already_followed';
+
+                    return $this->response;
+                }
+            }
+        }
+
+        $uf->addUserFollower(intval($this->request->publisher), $this->userId);
+
+        //Последователи пользователя
+        $uFollower = $uf->getUserFollowers($this->userId)->toArray();
+        if( !empty($uFollower) ){
+            foreach ($uFollower as $_uf){
+                $this->response->result['followers'][] = $_uf['uidf'];
+            }
+        }
+
+        //Те кого пользователь фолловит
+        $uPublisher = $uf->getUserPublishers($this->userId)->toArray();
+        if( !empty($uPublisher) ){
+            foreach ($uPublisher as $up){
+                $this->response->result['publishers'][] = $up['uid'];
+            }
+        }
 
         return $this->response;
     }

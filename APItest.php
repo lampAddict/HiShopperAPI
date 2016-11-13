@@ -105,6 +105,11 @@
             ,['caption'=>'Редактирование профиля + файл', 'url'=>'user/update', 'params'=>'{"name":"Вася Пупкин", "city":"Москва", "nickname":"Pinkpanter","email":"pinkpanter@mail.ru"}']
             ,['caption'=>'Редактирование профиля, никнейм занят', 'url'=>'user/update', 'params'=>'{"nickname":"test"}']
             ,['caption'=>'Редактирование профиля, удаление фото', 'url'=>'user/update', 'params'=>'{"photo":"delete"}']
+
+            ,['caption'=>'Подписка, не задан "издатель"', 'url'=>'user/follow', 'params'=>'{}']
+            ,['caption'=>'Подписка, не найден "издатель"', 'url'=>'user/follow', 'params'=>'{"publisher":0}']
+            ,['caption'=>'Подписка, уже подписан', 'url'=>'user/follow', 'params'=>'{"publisher":3}']
+            ,['caption'=>'Подписка', 'url'=>'user/follow', 'params'=>'{"publisher":1}']
         ];
 
     $c = 0;

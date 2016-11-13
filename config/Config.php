@@ -32,6 +32,7 @@ class Config {
                 ,'user_publicAds' => '\ctl\UserCtl::publicProfileAds'
                 ,'user_nickname' => '\ctl\UserCtl::checkNickname'
                 ,'user_update' => '\ctl\UserCtl::updateProfile'
+                ,'user_follow' => '\ctl\UserCtl::follow'
             ])
         );
 
