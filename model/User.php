@@ -33,13 +33,54 @@ class User extends MySQLDbObject{
     }
 
     /**
-     * @param $field
-     * @param $val
+     * Get value of particular field in user profile
+     * @param $field string field name
+     * @param $val string value
      *
      * @return \lib\model\ObjectCollection
      */
     public function getUserByFieldVal($field, $val) {
         $this->sql = "SELECT * FROM `".$this->table."` WHERE `$field` = '$val' LIMIT 1;";
         return $this->query();
+    }
+
+    /**
+     * Get name of user profile picture 
+     * @param $uid integer user identification number
+     * 
+     * @return \lib\model\ObjectCollection
+     */
+    public function getUserPhoto($uid){
+        $this->sql = "SELECT * FROM `user_photos` WHERE `uid` = '$uid' LIMIT 1;";
+        return $this->query();
+    }
+
+    /**
+     * Update user profile picture
+     * @param $uid integer user identification number
+     * @param $photo string file name
+     * 
+     * @return \lib\model\ObjectCollection
+     */
+    public function updateUserPhoto($uid, $photo){
+        $this->sql = "UPDATE `user_photos` SET `photo` = '$photo' WHERE `uid` = '$uid' LIMIT 1;";
+        return $this->query();
+    }
+
+    /**
+     * Save user profile picture name to DB
+     * @param $uid integer user identification number
+     * @param $photo string file name
+     * 
+     * @return \lib\model\ObjectCollection
+     */
+    public function saveUserPhoto($uid, $photo){
+        if( !empty($this->getUserPhoto($uid)->toArray()) ){
+            return $this->updateUserPhoto($uid, $photo);
+        }
+        else{
+            $this->sql = "INSERT INTO `user_photos` VALUES (DEFAULT, '$uid', '$photo', DEFAULT, DEFAULT);";
+            return $this->query();
+        }
     }
 }

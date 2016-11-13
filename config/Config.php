@@ -31,6 +31,7 @@ class Config {
                 ,'user_publicDeals' => '\ctl\UserCtl::publicProfileDeals'
                 ,'user_publicAds' => '\ctl\UserCtl::publicProfileAds'
                 ,'user_nickname' => '\ctl\UserCtl::checkNickname'
+                ,'user_update' => '\ctl\UserCtl::updateProfile'
             ])
         );
 

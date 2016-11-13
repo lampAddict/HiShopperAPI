@@ -4,9 +4,9 @@ namespace model;
 
 use core\Dispatcher;
 
-use lib\model\TimestampField;
 use lib\MySQLDbObject;
 use lib\model\IntegerField;
+use lib\model\TimestampField;
 
 /**
  * Class AuthCodes

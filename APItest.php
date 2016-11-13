@@ -25,29 +25,49 @@
 </head>
 <body>
     <script type="application/javascript">
-        function sendRequest(method, req, indx){
+        function sendRequest(_method, _req, _indx){
 
-            var  _data   = $('#data'+indx).val()
-                ,headers = {}
-                ,auth    = $('body').data('auth');
+            var  _data         = $('#data'+_indx).val()
+                ,_dataType     = 'json'
+                ,_contentType  = 'application/json; charset=utf-8'
+                ,_headers      = {}
+                ,_auth         = $('body').data('auth')
+                ,_processData  = true
+                ,_fdata;
 
-            if( auth )
-                headers = {
-                    'x-auth': auth
+            if( _auth )
+                _headers = {
+                    'x-auth': _auth
                 };
 
+            _fdata = _data;
+            if( $('#pic')[0].files.length > 0 ){
+                _fdata = new FormData();
+                _fdata.append('data', _data);
+                $.each($('#pic')[0].files, function (i, file) {
+                    _fdata.append('file-' + i, file);
+                });
+
+                _dataType = 'text';
+                _contentType = false;
+                _processData = false;
+            }
+
             $.ajax({
-                url: req,
-                method: method,
-                headers: headers,
-                dataType: 'json',
-                contentType: 'application/json; charset=utf-8',
-                data: _data,
+                url: _req,
+                method: _method,
+                headers: _headers,
+                dataType: _dataType,
+                contentType: _contentType,
+                processData: _processData,
+                data: _fdata,
                 success: function(resp){
+                    
                     console.log(resp);
+                    
                     if( resp ){
                         //show server response
-                        $('#response' + indx).text(JSON.stringify(resp));
+                        $('#response' + _indx).text(JSON.stringify(resp));
 
                         //save auth token to body data
                         if(    resp.result != null
@@ -60,6 +80,10 @@
             });
         }
     </script>
+
+    <div class="block border">
+        <input id="pic" name="pic" type="file" multiple="">
+    </div>
 
     <?php
         $req = [
@@ -78,6 +102,7 @@
             ,['caption'=>'Сделки в публичном профиле', 'url'=>'user/public/1/deals', 'params'=>'max=3&count=2', 'method'=>'GET']
             ,['caption'=>'Объявления в публичном профиле', 'url'=>'user/public/1/ads', 'params'=>'max=3&count=2', 'method'=>'GET']
             ,['caption'=>'Проверка никнейма', 'url'=>'user/nickname', 'params'=>'{"nickname":"test"}']
+            ,['caption'=>'Редактирование профиля', 'url'=>'user/update', 'params'=>'{"name":"Вася Пупкин", "city":"Москва", "nickname":"Pinkpanter","email":"pinkpanter@mail.ru"}']
         ];
 
     $c = 0;

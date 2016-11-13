@@ -9,7 +9,8 @@ RewriteRule ^auth\/phone$ /hiShopperAPI/index.php?requestName=auth&m=phone
 RewriteRule ^auth\/verify$ /hiShopperAPI/index.php?requestName=auth&m=verify
 RewriteRule ^auth\/setpt$ /hiShopperAPI/index.php?requestName=auth&m=setpt
 RewriteRule ^user\/profile$ /hiShopperAPI/index.php?requestName=user&m=profile
-RewriteRule ^user\/nickname$ /hiShopperAPI/index.php?requestName=user&m=nickname
+RewriteRule ^user\/nickname$ /hiShopperAPI/index.php?requestName=user&m=profile
+RewriteRule ^user\/update$ /hiShopperAPI/index.php?requestName=user&m=update
 RewriteRule ^user\/public\/([^/]+)$ /hiShopperAPI/index.php?requestName=user&m=public&id=$1
 RewriteRule ^user\/public\/([^/]+)/deals$ /hiShopperAPI/index.php?requestName=user&m=publicDeals&id=$1
 RewriteRule ^user\/public\/([^/]+)/ads$ /hiShopperAPI/index.php?requestName=user&m=publicAds&id=$1

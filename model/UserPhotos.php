@@ -7,6 +7,7 @@ use core\Dispatcher;
 use lib\MySQLDbObject;
 use lib\model\IntegerField;
 use lib\model\StringField;
+use lib\model\TimestampField;
 
 /**
  * Class UserPhotos
@@ -20,6 +21,8 @@ class UserPhotos extends MySQLDbObject{
         $this->setField('id', new IntegerField('id'));
         $this->setField('uid', new IntegerField('uid'));
         $this->setField('photo', new StringField('photo'));
+        $this->setField('created_at', new TimestampField('created_at'));
+        $this->setField('updated_at', new TimestampField('updated_at'));
     }
 
     /**
