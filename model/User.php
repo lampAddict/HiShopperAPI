@@ -124,4 +124,9 @@ class User extends MySQLDbObject{
 
         return false;
     }
+
+    public function searchByNickname($nickname){
+        $this->sql = "SELECT * FROM `".$this->table."` WHERE `nickname` LIKE '$nickname%';";
+        return $this->query();
+    }
 }

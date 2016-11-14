@@ -16,7 +16,7 @@ RewriteRule ^user\/nickname$ /hiShopperAPI/index.php?requestName=user&m=profile
 RewriteRule ^user\/update$ /hiShopperAPI/index.php?requestName=user&m=update
 RewriteRule ^user\/follow$ /hiShopperAPI/index.php?requestName=user&m=follow
 RewriteRule ^user\/unfollow$ /hiShopperAPI/index.php?requestName=user&m=unfollow
-RewriteRule ^user\/search$ /hiShopperAPI/index.php?requestName=user&m=search
+RewriteRule ^user\/search$ /hiShopperAPI/index.php?requestName=user&m=search&%{QUERY_STRING} [L]
 RewriteRule ^user\/support$ /hiShopperAPI/index.php?requestName=user&m=support
 RewriteRule ^user\/supportchat$ /hiShopperAPI/index.php?requestName=user&m=supportchat
 

@@ -130,7 +130,7 @@
             ,['caption'=>'Избранное, параметры постранички', 'url'=>'user/favorite/list', 'params'=>'max=1&count=1', 'method'=>'GET']
             ,['caption'=>'Количество в избранном', 'url'=>'user/favorite/count', 'params'=>'', 'method'=>'GET']
 
-            ,['caption'=>'Поиск пользователей, (по Никнейму)', 'url'=>'user/search', 'params'=>'q=pink', 'method'=>'GET']
+            ,['caption'=>'Поиск пользователей, (по никнейму)', 'url'=>'user/search', 'params'=>'q=pink', 'method'=>'GET']
             ,['caption'=>'Поиск пользователей, только общее количество', 'url'=>'user/search', 'params'=>'q=pink&type=count', 'method'=>'GET']
             ,['caption'=>'Поиск пользователей, короткий запрос', 'url'=>'user/search', 'params'=>'q=pi', 'method'=>'GET']
             ,['caption'=>'Поиск пользователей, параметры постранички', 'url'=>'user/search', 'params'=>'q=pink&max=1193&count=1', 'method'=>'GET']

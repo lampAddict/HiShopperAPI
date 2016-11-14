@@ -618,4 +618,46 @@ class UserCtl extends Ctl{
 
         return $this->response;
     }
+
+    public function search(){
+
+        if( isset($_GET['q']) ){
+
+            if( mb_strlen($_GET['q']) < 3 ){
+                $this->response->result = null;
+                $this->response->errors[] = 'short_query';
+
+                return $this->response;
+            }
+
+            $searchFor = addslashes($_GET['q']);
+            $max = isset($_GET['max']) ? intval($_GET['max']) : 999;
+            $count = isset($_GET['count']) ? intval($_GET['count']) : 0;
+
+            $this->response->result = [];
+
+            $u = new User();
+            $_u = $u->searchByNickname($searchFor)->toArray();
+            if( !empty($_u) ){
+
+                if(    isset($_GET['type'])
+                    && $_GET['type'] == 'count'
+                ){
+                    $this->response->result['count'] = count($_u);
+                }
+                else{
+                    $num = 0;
+                    foreach($_u as $c=>$__u){
+                        if(    $c >= $count
+                            && $num < $max
+                        ){
+                            $this->response->result[] = $__u;
+                            $num++;
+                        }
+                    }
+                }
+            }
+        }
+        return $this->response;
+    }
 }
