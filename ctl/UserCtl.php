@@ -407,4 +407,67 @@ class UserCtl extends Ctl{
 
         return $this->response;
     }
+
+    public function unfollow(){
+        if( !$this->checkUserToken() ){
+            $this->response->result = null;
+            $this->response->errors[] = 'not_authorized';
+
+            return $this->response;
+        }
+
+        if( !isset($this->request->publisher) ){
+            $this->response->result = null;
+            $this->response->errors[] = 'wrong_publisher';
+
+            return $this->response;
+        }
+
+        $u = new User();
+        $uProfileData = $u->getUserByFieldVal('id', intval($this->request->publisher))->toArray();
+        if( empty($uProfileData) ){
+            $this->response->result = null;
+            $this->response->errors[] = 'publisher_not_found';
+
+            return $this->response;
+        }
+
+        $uf = new UserFollowers();
+        $up = $uf->getUserPublishers($this->userId)->toArray();
+        if( !empty($up) ){
+            $exist = false;
+            foreach ($up as $p){
+                if( $p['uid'] == intval($this->request->publisher) ){
+                    $exist = true;
+                    break;
+                }
+            }
+            if(!$exist){
+                $this->response->result = null;
+                $this->response->errors[] = 'not_exists';
+
+                return $this->response;
+            }
+        }
+
+        $uf->removeUserFollower(intval($this->request->publisher), $this->userId);
+
+        //Последователи пользователя
+        $uFollower = $uf->getUserFollowers($this->userId)->toArray();
+        if( !empty($uFollower) ){
+            foreach ($uFollower as $_uf){
+                $this->response->result['followers'][] = $_uf['uidf'];
+            }
+        }
+
+        //Те кого пользователь фолловит
+        $uPublisher = $uf->getUserPublishers($this->userId)->toArray();
+        if( !empty($uPublisher) ){
+            foreach ($uPublisher as $up){
+                $this->response->result['publishers'][] = $up['uid'];
+            }
+        }
+
+        return $this->response;
+    }
 }

@@ -12,6 +12,7 @@ RewriteRule ^user\/profile$ /hiShopperAPI/index.php?requestName=user&m=profile
 RewriteRule ^user\/nickname$ /hiShopperAPI/index.php?requestName=user&m=profile
 RewriteRule ^user\/update$ /hiShopperAPI/index.php?requestName=user&m=update
 RewriteRule ^user\/follow$ /hiShopperAPI/index.php?requestName=user&m=follow
+RewriteRule ^user\/unfollow$ /hiShopperAPI/index.php?requestName=user&m=unfollow
 RewriteRule ^user\/public\/([^/]+)$ /hiShopperAPI/index.php?requestName=user&m=public&id=$1
 RewriteRule ^user\/public\/([^/]+)/deals$ /hiShopperAPI/index.php?requestName=user&m=publicDeals&id=$1
 RewriteRule ^user\/public\/([^/]+)/ads$ /hiShopperAPI/index.php?requestName=user&m=publicAds&id=$1

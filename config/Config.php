@@ -33,6 +33,7 @@ class Config {
                 ,'user_nickname' => '\ctl\UserCtl::checkNickname'
                 ,'user_update' => '\ctl\UserCtl::updateProfile'
                 ,'user_follow' => '\ctl\UserCtl::follow'
+                ,'user_unfollow' => '\ctl\UserCtl::unfollow'
             ])
         );
 

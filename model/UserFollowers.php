@@ -70,4 +70,18 @@ class UserFollowers extends MySQLDbObject{
         }
         return false;
     }
+
+    /**
+     * Remove follower from user
+     * @param $uid user identification number
+     * @param $uidf user follower identification number
+     * 
+     * @return \lib\model\ObjectCollection
+     */
+    public function removeUserFollower($uid, $uidf){
+        if( !empty($this->checkUserFollowing($uid, $uidf)->toArray()) ){
+            $this->sql = "DELETE FROM `".$this->table."` WHERE `uid` = '$uid' AND `uidf` = '$uidf' LIMIT 1;";
+            return $this->query();
+        }
+    }
 }

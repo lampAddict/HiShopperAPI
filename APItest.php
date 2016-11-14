@@ -110,6 +110,11 @@
             ,['caption'=>'Подписка, не найден "издатель"', 'url'=>'user/follow', 'params'=>'{"publisher":0}']
             ,['caption'=>'Подписка, уже подписан', 'url'=>'user/follow', 'params'=>'{"publisher":3}']
             ,['caption'=>'Подписка', 'url'=>'user/follow', 'params'=>'{"publisher":1}']
+
+            ,['caption'=>'Отписка, не задан "издатель"', 'url'=>'user/unfollow', 'params'=>'{}']
+            ,['caption'=>'Отписка, не найден "издатель"', 'url'=>'user/unfollow', 'params'=>'{"publisher":0}']
+            ,['caption'=>'Отписка, не подписан', 'url'=>'user/unfollow', 'params'=>'{"publisher":2}']
+            ,['caption'=>'Отписка', 'url'=>'user/unfollow', 'params'=>'{"publisher":1}']
         ];
 
     $c = 0;
