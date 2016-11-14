@@ -24,7 +24,7 @@ class UserSizes extends MySQLDbObject{
 
     /**
      * Get list of user sizes
-     * @param $uid user identification number
+     * @param $uid integer user identification number
      *
      * @return \lib\model\ObjectCollection
      */

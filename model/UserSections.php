@@ -23,7 +23,7 @@ class UserSections extends MySQLDbObject{
 
     /**
      * Get list of user sections ids
-     * @param $uid user identification number
+     * @param $uid integer user identification number
      *
      * @return \lib\model\ObjectCollection
      */

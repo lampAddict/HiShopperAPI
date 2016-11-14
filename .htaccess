@@ -5,6 +5,9 @@ RewriteEngine on
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 
+RewriteRule ^faq$ /hiShopperAPI/index.php?requestName=faq
+RewriteRule ^options$ /hiShopperAPI/index.php?requestName=options
+
 RewriteRule ^auth\/phone$ /hiShopperAPI/index.php?requestName=auth&m=phone
 RewriteRule ^auth\/verify$ /hiShopperAPI/index.php?requestName=auth&m=verify
 RewriteRule ^auth\/setpt$ /hiShopperAPI/index.php?requestName=auth&m=setpt
@@ -13,6 +16,26 @@ RewriteRule ^user\/nickname$ /hiShopperAPI/index.php?requestName=user&m=profile
 RewriteRule ^user\/update$ /hiShopperAPI/index.php?requestName=user&m=update
 RewriteRule ^user\/follow$ /hiShopperAPI/index.php?requestName=user&m=follow
 RewriteRule ^user\/unfollow$ /hiShopperAPI/index.php?requestName=user&m=unfollow
+RewriteRule ^user\/search$ /hiShopperAPI/index.php?requestName=user&m=search
+RewriteRule ^user\/support$ /hiShopperAPI/index.php?requestName=user&m=support
+RewriteRule ^user\/supportchat$ /hiShopperAPI/index.php?requestName=user&m=supportchat
+
+RewriteRule ^catalog\/condition$ /hiShopperAPI/index.php?requestName=catalog&m=condition
+RewriteRule ^catalog\/color$ /hiShopperAPI/index.php?requestName=catalog&m=color
+RewriteRule ^catalog\/section$ /hiShopperAPI/index.php?requestName=catalog&m=section
+RewriteRule ^catalog\/payment$ /hiShopperAPI/index.php?requestName=catalog&m=payment
+RewriteRule ^catalog\/delivery$ /hiShopperAPI/index.php?requestName=catalog&m=delivery
+RewriteRule ^catalog\/gender$ /hiShopperAPI/index.php?requestName=catalog&m=gender
+RewriteRule ^catalog\/brand$ /hiShopperAPI/index.php?requestName=catalog&m=brand
+RewriteRule ^catalog\/addbrand$ /hiShopperAPI/index.php?requestName=catalog&m=addbrand
+RewriteRule ^catalog\/size$ /hiShopperAPI/index.php?requestName=catalog&m=size
+RewriteRule ^catalog\/size\/([\d]+)$ /hiShopperAPI/index.php?requestName=catalog&m=size&id=$1
+
+RewriteRule ^user\/favorite\/add$ /hiShopperAPI/index.php?requestName=user&m=favoriteAdd
+RewriteRule ^user\/favorite\/remove$ /hiShopperAPI/index.php?requestName=user&m=favoriteRemove
+RewriteRule ^user\/favorite\/list$ /hiShopperAPI/index.php?requestName=user&m=favoriteList&%{QUERY_STRING} [L]
+RewriteRule ^user\/favorite\/count$ /hiShopperAPI/index.php?requestName=user&m=favoriteCount
+
 RewriteRule ^user\/public\/([^/]+)$ /hiShopperAPI/index.php?requestName=user&m=public&id=$1
 RewriteRule ^user\/public\/([^/]+)/deals$ /hiShopperAPI/index.php?requestName=user&m=publicDeals&id=$1
 RewriteRule ^user\/public\/([^/]+)/ads$ /hiShopperAPI/index.php?requestName=user&m=publicAds&id=$1

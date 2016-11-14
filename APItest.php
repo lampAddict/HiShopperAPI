@@ -115,6 +115,50 @@
             ,['caption'=>'Отписка, не найден "издатель"', 'url'=>'user/unfollow', 'params'=>'{"publisher":0}']
             ,['caption'=>'Отписка, не подписан', 'url'=>'user/unfollow', 'params'=>'{"publisher":2}']
             ,['caption'=>'Отписка', 'url'=>'user/unfollow', 'params'=>'{"publisher":1}']
+
+            ,['caption'=>'Добавление в избранное, не задано объявление', 'url'=>'user/favorite/add', 'params'=>'{}']
+            ,['caption'=>'Добавление в избранное, не найдено объявление', 'url'=>'user/favorite/add', 'params'=>'{"ad":0}']
+            ,['caption'=>'Добавление в избранное, уже добавлено', 'url'=>'user/favorite/add', 'params'=>'{"ad":1}']
+            ,['caption'=>'Добавление в избранное', 'url'=>'user/favorite/add', 'params'=>'{"ad":2}']
+
+            ,['caption'=>'Удаление из избранного, не задано объявление', 'url'=>'user/favorite/remove', 'params'=>'{}']
+            ,['caption'=>'Удаление из избранного, не найдено объявление', 'url'=>'user/favorite/remove', 'params'=>'{"ad":0}']
+            ,['caption'=>'Удаление из избранного, нет в избранном', 'url'=>'user/favorite/remove', 'params'=>'{"ad":555}']
+            ,['caption'=>'Удаление из избранного', 'url'=>'user/favorite/remove', 'params'=>'{"ad":2}']
+
+            ,['caption'=>'Избранное', 'url'=>'user/favorite/list', 'params'=>'', 'method'=>'GET']
+            ,['caption'=>'Избранное, параметры постранички', 'url'=>'user/favorite/list', 'params'=>'max=1&count=1', 'method'=>'GET']
+            ,['caption'=>'Количество в избранном', 'url'=>'user/favorite/count', 'params'=>'', 'method'=>'GET']
+
+            ,['caption'=>'Поиск пользователей, (по Никнейму)', 'url'=>'user/search', 'params'=>'q=pink', 'method'=>'GET']
+            ,['caption'=>'Поиск пользователей, только общее количество', 'url'=>'user/search', 'params'=>'q=pink&type=count', 'method'=>'GET']
+            ,['caption'=>'Поиск пользователей, короткий запрос', 'url'=>'user/search', 'params'=>'q=pi', 'method'=>'GET']
+            ,['caption'=>'Поиск пользователей, параметры постранички', 'url'=>'user/search', 'params'=>'q=pink&max=1193&count=1', 'method'=>'GET']
+
+            ,['caption'=>'Добавление сообщения для службы поддержки', 'url'=>'user/support', 'params'=>'{"message":"Не могу создать объявление"}']
+            ,['caption'=>'Чат со службой поддержки', 'url'=>'user/supportchat', 'params'=>'', 'method'=>'GET']
+            ,['caption'=>'Чат со службой поддержки, постраничка', 'url'=>'user/supportchat', 'params'=>'max=1315&count=3', 'method'=>'GET']
+
+            ,['caption'=>'Чат со службой поддержки', 'url'=>'faq', 'params'=>'', 'method'=>'GET']
+            ,['caption'=>'Чат со службой поддержки', 'url'=>'options', 'params'=>'', 'method'=>'GET']
+
+            ,['caption'=>'Состояния (товара)', 'url'=>'catalog/condition', 'params'=>'', 'method'=>'GET']
+            ,['caption'=>'Цвета', 'url'=>'catalog/color', 'params'=>'', 'method'=>'GET']
+            ,['caption'=>'Разделы каталога', 'url'=>'catalog/section', 'params'=>'', 'method'=>'GET']
+            ,['caption'=>'Размеры, все', 'url'=>'catalog/size', 'params'=>'', 'method'=>'GET']
+            ,['caption'=>'Размеры, для указанного раздела', 'url'=>'catalog/size/16', 'params'=>'', 'method'=>'GET']
+            ,['caption'=>'Размеры, несуществующий раздел', 'url'=>'catalog/size/1', 'params'=>'', 'method'=>'GET']
+            ,['caption'=>'Размеры, раздел без размеров', 'url'=>'catalog/size/13', 'params'=>'', 'method'=>'GET']
+            ,['caption'=>'Способы оплаты', 'url'=>'catalog/payment', 'params'=>'', 'method'=>'GET']
+            ,['caption'=>'Способы отправки', 'url'=>'catalog/delivery', 'params'=>'', 'method'=>'GET']
+            ,['caption'=>'Пол', 'url'=>'catalog/gender', 'params'=>'', 'method'=>'GET']
+            ,['caption'=>'Бренды', 'url'=>'catalog/brand', 'params'=>'', 'method'=>'GET']
+            ,['caption'=>'Добавление бренда', 'url'=>'catalog/addbrand', 'params'=>'{"name":"Новый бренд"}']
+            ,['caption'=>'Добавление бренда, не задано название', 'url'=>'catalog/addbrand', 'params'=>'{"name":""}']
+            ,['caption'=>'Добавление бренда, уже есть', 'url'=>'catalog/addbrand', 'params'=>'{"name":"Versace"}']
+
+            ,['caption'=>'Добавление объявления, ошибки в данных', 'url'=>'ad/add', 'params'=>'{"section":0,"brand":0,"gender":"x","condition":0,"color":0,"size":0,"material":"","features":"","purchase":0,"price":0,"payment":[""],"delivery":{}}']
+            ,['caption'=>'Добавление объявления, + файл', 'url'=>'ad/add', 'params'=>'{"section":17,"brand":474,"gender":"w","condition":13,"color":15,"size":65,"material":"кожа","features":"2 раза носил","purchase":20000,"price":10000,"payment":["agreement","application"],"delivery":{"personal":0,"courier":500,"post":400}}']
         ];
 
     $c = 0;

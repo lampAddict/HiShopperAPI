@@ -28,7 +28,7 @@ class UserAds extends MySQLDbObject{
 
     /**
      * Get list of user ads
-     * @param $uid user identification number
+     * @param $uid integer user identification number
      *
      * @return \lib\model\ObjectCollection
      */

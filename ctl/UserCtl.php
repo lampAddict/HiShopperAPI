@@ -12,6 +12,8 @@ use model\UserPhotos;
 use model\UserSizes;
 use model\UserSections;
 use model\UserFollowers;
+use model\Ad;
+use model\UserFavorites;
 
 /**
  * Class UserCtl
@@ -466,6 +468,152 @@ class UserCtl extends Ctl{
             foreach ($uPublisher as $up){
                 $this->response->result['publishers'][] = $up['uid'];
             }
+        }
+
+        return $this->response;
+    }
+
+    public function favoriteAdd(){
+        if( !$this->checkUserToken() ){
+            $this->response->result = null;
+            $this->response->errors[] = 'not_authorized';
+
+            return $this->response;
+        }
+
+        if( !isset($this->request->ad) ){
+            $this->response->result = null;
+            $this->response->errors[] = 'wrong_ad';
+
+            return $this->response;
+        }
+
+        $ad = new Ad();
+        $_ad = $ad->getAdById(intval($this->request->ad))->toArray();
+        if( empty($_ad) ){
+            $this->response->result = null;
+            $this->response->errors[] = 'ad_not_found';
+
+            return $this->response;
+        }
+
+        $uf = new UserFavorites();
+        $_uf = $uf->getUserFavorites($this->userId)->toArray();
+        if( !empty($_uf) ){
+            foreach ($_uf as $__uf){
+                if( $__uf['aid'] == intval($this->request->ad) ){
+                    $this->response->result = null;
+                    $this->response->errors[] = 'already_favorite';
+
+                    return $this->response;
+                }
+            }
+        }
+        
+        $uf->addUserFavorite($this->userId, intval($this->request->ad));
+
+        $this->response->result['count'] = count($uf->getUserFavorites($this->userId)->toArray());
+
+        return $this->response;
+    }
+
+    public function favoriteRemove(){
+        if( !$this->checkUserToken() ){
+            $this->response->result = null;
+            $this->response->errors[] = 'not_authorized';
+
+            return $this->response;
+        }
+
+        if( !isset($this->request->ad) ){
+            $this->response->result = null;
+            $this->response->errors[] = 'wrong_ad';
+
+            return $this->response;
+        }
+
+        $ad = new Ad();
+        $_ad = $ad->getAdById(intval($this->request->ad))->toArray();
+        if( empty($_ad) ){
+            $this->response->result = null;
+            $this->response->errors[] = 'ad_not_found';
+
+            return $this->response;
+        }
+
+        $uf = new UserFavorites();
+        $_uf = $uf->getUserFavorites($this->userId)->toArray();
+        if( !empty($_uf) ){
+            $inFav = false;
+            foreach ($_uf as $__uf){
+                if( $__uf['aid'] == intval($this->request->ad) ){
+                    $inFav = true;
+                    break;
+                }
+            }
+
+            if( !$inFav ){
+                $this->response->result = null;
+                $this->response->errors[] = 'not_in_favorites';
+
+                return $this->response;
+            }
+        }
+
+        $uf->removeUserFavorite($this->userId, intval($this->request->ad));
+
+        $this->response->result['count'] = count($uf->getUserFavorites($this->userId)->toArray());
+
+        return $this->response;
+    }
+
+    public function favoriteList(){
+        if( !$this->checkUserToken() ){
+            $this->response->result = null;
+            $this->response->errors[] = 'not_authorized';
+
+            return $this->response;
+        }
+
+        $this->response->result = [];
+
+        $max = isset($_GET['max']) ? intval($_GET['max']) : 999;
+        $count = isset($_GET['count']) ? intval($_GET['count']) : 0;
+
+        $u  = new User();
+        $ad = new Ad();
+        $uf = new UserFavorites();
+        $_uf = $uf->getUserFavorites($this->userId)->toArray();
+        if( !empty($_uf) ){
+            $num = 0;
+            foreach ($_uf as $c=>$__uf){
+                if(    $c >= $count
+                    && $num < $max
+                ){
+                    $_ad = $ad->getAdById($__uf['aid'])->toArray();
+                    $_ad[0]['user'] = $u->getUserByFieldVal('id', $this->userId)->toArray()[0];
+                    $this->response->result[] = ['id'=>$__uf['id'], 'ad'=>$_ad[0], 'can_buy'=>false];
+
+                    $num++;
+                }
+            }
+        }
+
+        return $this->response;
+    }
+
+    public function favoriteCount(){
+        if( !$this->checkUserToken() ){
+            $this->response->result = null;
+            $this->response->errors[] = 'not_authorized';
+
+            return $this->response;
+        }
+
+        $uf = new UserFavorites();
+        $_uf = $uf->getUserFavorites($this->userId)->toArray();
+        if( !empty($_uf) ){
+            $this->response->result['count'] = count($_uf);
         }
 
         return $this->response;

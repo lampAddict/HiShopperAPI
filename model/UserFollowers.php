@@ -73,8 +73,8 @@ class UserFollowers extends MySQLDbObject{
 
     /**
      * Remove follower from user
-     * @param $uid user identification number
-     * @param $uidf user follower identification number
+     * @param $uid integer user identification number
+     * @param $uidf integer user follower identification number
      * 
      * @return \lib\model\ObjectCollection
      */
