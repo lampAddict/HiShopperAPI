@@ -685,13 +685,22 @@ class UserCtl extends Ctl{
             return $this->response;
         }
 
+        $max = isset($_GET['max']) ? intval($_GET['max']) : 999;
+        $count = isset($_GET['count']) ? intval($_GET['count']) : 0;
+
         $this->response->result = [];
 
         $sm = new SupportMessages();
         $_sm = $sm->getUserChatSupport($this->userId)->toArray();
         if( !empty($_sm) ){
-            foreach ($_sm as $__sm){
-                $this->response->result[] = ['message'=>$__sm['message'], 'solution'=>(isset($__sm['msg']) ? $__sm['msg'] : '')];
+            $num = 0;
+            foreach ($_sm as $c=>$__sm){
+                if(    $c >= $count
+                    && $num < $max
+                ){
+                    $this->response->result[] = ['message'=>$__sm['message'], 'solution'=>(isset($__sm['msg']) ? $__sm['msg'] : '')];
+                    $num++;
+                }
             }
         }
 
