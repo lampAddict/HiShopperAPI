@@ -92,4 +92,7 @@ class MySQLDbObject extends Object {
         $this->engine->createTable($this->table, $this->fields);
     }
 
+    public function getLastInsertedId(){
+        return $this->engine->lastInsertedId();
+    }
 }

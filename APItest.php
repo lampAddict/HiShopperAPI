@@ -139,8 +139,8 @@
             ,['caption'=>'Чат со службой поддержки', 'url'=>'user/supportchat', 'params'=>'', 'method'=>'GET']
             ,['caption'=>'Чат со службой поддержки, постраничка', 'url'=>'user/supportchat', 'params'=>'max=1315&count=3', 'method'=>'GET']
 
-            ,['caption'=>'Чат со службой поддержки', 'url'=>'faq', 'params'=>'', 'method'=>'GET']
-            ,['caption'=>'Чат со службой поддержки', 'url'=>'options', 'params'=>'', 'method'=>'GET']
+            ,['caption'=>'FAQ', 'url'=>'faq', 'params'=>'', 'method'=>'GET']
+            ,['caption'=>'Настройки', 'url'=>'options', 'params'=>'', 'method'=>'GET']
 
             ,['caption'=>'Состояния (товара)', 'url'=>'catalog/condition', 'params'=>'', 'method'=>'GET']
             ,['caption'=>'Цвета', 'url'=>'catalog/color', 'params'=>'', 'method'=>'GET']

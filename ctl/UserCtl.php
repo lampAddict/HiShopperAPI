@@ -4,6 +4,8 @@ namespace ctl;
 
 use core\JsonRequest;
 
+use model\SupportMessages;
+use model\SupportSolutions;
 use model\User;
 use model\UserAds;
 use model\UserBrands;
@@ -658,6 +660,41 @@ class UserCtl extends Ctl{
                 }
             }
         }
+        return $this->response;
+    }
+    
+    public function support(){
+        if( !$this->checkUserToken() ){
+            $this->response->result = null;
+            $this->response->errors[] = 'not_authorized';
+
+            return $this->response;
+        }
+
+        $sm = new SupportMessages();
+        $this->response->result['id'] = $sm->addSupportMessage($this->userId, addslashes($this->request->message));
+
+        return $this->response;
+    }
+
+    public function supportChat(){
+        if( !$this->checkUserToken() ){
+            $this->response->result = null;
+            $this->response->errors[] = 'not_authorized';
+
+            return $this->response;
+        }
+
+        $this->response->result = [];
+
+        $sm = new SupportMessages();
+        $_sm = $sm->getUserChatSupport($this->userId)->toArray();
+        if( !empty($_sm) ){
+            foreach ($_sm as $__sm){
+                $this->response->result[] = ['message'=>$__sm['message'], 'solution'=>(isset($__sm['msg']) ? $__sm['msg'] : '')];
+            }
+        }
+
         return $this->response;
     }
 }

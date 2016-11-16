@@ -29,6 +29,12 @@ class Ad extends MySQLDbObject{
         $this->setField('created_at', new TimestampField('created_at'));
     }
 
+    /**
+     * Get advertisement by its identification number
+     * @param $id integer ad id
+     * 
+     * @return \lib\model\ObjectCollection
+     */
     public function getAdById($id) {
         $this->sql = "SELECT * FROM `".$this->table."` WHERE `id` = '$id' LIMIT 1;";
         return $this->query();

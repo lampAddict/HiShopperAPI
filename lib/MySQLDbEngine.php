@@ -128,4 +128,7 @@ protected function show_error_msg($msg = ''){
     error_log($msg . ' ' .mysqli_error($this->link_id));
 }
 
+	public function lastInsertedId(){
+		return mysqli_insert_id($this->link_id);
+	}
 }

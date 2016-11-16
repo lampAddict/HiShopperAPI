@@ -41,7 +41,7 @@ class Config {
                 ,'user_favoriteCount' => '\ctl\UserCtl::favoriteCount'
                 ,'user_search' => '\ctl\UserCtl::search'
                 ,'user_support' => '\ctl\UserCtl::support'
-                ,'user_supportchat' => '\ctl\UserCtl::supportchat'
+                ,'user_supportchat' => '\ctl\UserCtl::supportChat'
 
                 ,'faq' => '\ctl\FaqCtl::faq'
                 ,'options' => '\ctl\OptionsCtl::options'
