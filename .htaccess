@@ -5,9 +5,6 @@ RewriteEngine on
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 
-RewriteRule ^faq$ /hiShopperAPI/index.php?requestName=faq
-RewriteRule ^options$ /hiShopperAPI/index.php?requestName=options
-
 RewriteRule ^auth\/phone$ /hiShopperAPI/index.php?requestName=auth&m=phone
 RewriteRule ^auth\/verify$ /hiShopperAPI/index.php?requestName=auth&m=verify
 RewriteRule ^auth\/setpt$ /hiShopperAPI/index.php?requestName=auth&m=setpt
@@ -30,6 +27,12 @@ RewriteRule ^catalog\/brand$ /hiShopperAPI/index.php?requestName=catalog&m=brand
 RewriteRule ^catalog\/addbrand$ /hiShopperAPI/index.php?requestName=catalog&m=addbrand
 RewriteRule ^catalog\/size$ /hiShopperAPI/index.php?requestName=catalog&m=size
 RewriteRule ^catalog\/size\/([\d]+)$ /hiShopperAPI/index.php?requestName=catalog&m=size&id=$1
+
+RewriteRule ^ad\/add$ /hiShopperAPI/index.php?requestName=ad&m=add
+RewriteRule ^ad\/update$ /hiShopperAPI/index.php?requestName=ad&m=update
+RewriteRule ^ad\/delete$ /hiShopperAPI/index.php?requestName=ad&m=delete
+RewriteRule ^ad\/list$ /hiShopperAPI/index.php?requestName=ad&m=list
+
 
 RewriteRule ^user\/favorite\/add$ /hiShopperAPI/index.php?requestName=user&m=favoriteAdd
 RewriteRule ^user\/favorite\/remove$ /hiShopperAPI/index.php?requestName=user&m=favoriteRemove

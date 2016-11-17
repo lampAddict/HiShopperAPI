@@ -29,10 +29,11 @@ class JsonRequestHandler implements IRequestHandler {
         )return;
 
         $requestName = '';
-        if(    isset($_GET['requestName'])
-            && isset($_GET['m'])
-        ){
-            $requestName = $_GET['requestName'].'_'.$_GET['m'];
+        if( isset($_GET['requestName']) ){
+            if( isset($_GET['m']) )
+                $requestName = $_GET['requestName'].'_'.$_GET['m'];
+            else
+                $requestName = $_GET['requestName'];
         }
         if( $requestName == '' )return;
 

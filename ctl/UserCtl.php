@@ -5,7 +5,6 @@ namespace ctl;
 use core\JsonRequest;
 
 use model\SupportMessages;
-use model\SupportSolutions;
 use model\User;
 use model\UserAds;
 use model\UserBrands;

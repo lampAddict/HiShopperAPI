@@ -44,7 +44,7 @@ class Config {
                 ,'user_supportchat' => '\ctl\UserCtl::supportChat'
 
                 ,'faq' => '\ctl\FaqCtl::faq'
-                ,'options' => '\ctl\OptionsCtl::options'
+                ,'options' => '\ctl\SettingsCtl::settings'
 
                 ,'catalog_condition' => '\ctl\CatalogCtl::condition'
                 ,'catalog_color' => '\ctl\CatalogCtl::color'
@@ -55,6 +55,11 @@ class Config {
                 ,'catalog_gender' => '\ctl\CatalogCtl::gender'
                 ,'catalog_brand' => '\ctl\CatalogCtl::brand'
                 ,'catalog_addbrand' => '\ctl\CatalogCtl::addBrand'
+
+                ,'ad_add' => '\ctl\AdCtl::addAd'
+                ,'ad_update' => '\ctl\AdCtl::updateAd'
+                ,'ad_delete' => '\ctl\AdCtl::deleteAd'
+                ,'ad_list' => '\ctl\AdCtl::listAd'
             ])
         );
 
