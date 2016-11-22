@@ -33,7 +33,6 @@ RewriteRule ^ad\/update$ /hiShopperAPI/index.php?requestName=ad&m=update
 RewriteRule ^ad\/delete$ /hiShopperAPI/index.php?requestName=ad&m=delete
 RewriteRule ^ad\/list$ /hiShopperAPI/index.php?requestName=ad&m=list
 
-
 RewriteRule ^user\/favorite\/add$ /hiShopperAPI/index.php?requestName=user&m=favoriteAdd
 RewriteRule ^user\/favorite\/remove$ /hiShopperAPI/index.php?requestName=user&m=favoriteRemove
 RewriteRule ^user\/favorite\/list$ /hiShopperAPI/index.php?requestName=user&m=favoriteList&%{QUERY_STRING} [L]

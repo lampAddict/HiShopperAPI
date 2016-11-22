@@ -479,12 +479,16 @@ class UserCtl extends Ctl{
             $this->response->result = null;
             $this->response->errors[] = 'not_authorized';
 
+            http_response_code(401);
+
             return $this->response;
         }
 
         if( !isset($this->request->ad) ){
             $this->response->result = null;
             $this->response->errors[] = 'wrong_ad';
+
+            http_response_code(400);
 
             return $this->response;
         }
@@ -494,6 +498,8 @@ class UserCtl extends Ctl{
         if( empty($_ad) ){
             $this->response->result = null;
             $this->response->errors[] = 'ad_not_found';
+
+            http_response_code(404);
 
             return $this->response;
         }

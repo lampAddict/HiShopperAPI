@@ -19,6 +19,11 @@ class SettingsCtl extends Ctl{
         parent::__construct($request);
     }
 
+    /**
+     * Get list of settings for mobile application
+     * 
+     * @return \core\JsonResponse
+     */
     public function settings(){
         $s = new Settings();
         $_s = $s->getSettings()->toArray();
